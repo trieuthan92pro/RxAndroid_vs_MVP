@@ -12,7 +12,11 @@ public interface MainContract {
 
         void showResult(List<Note> notes);
 
-        void showError(Exception e);
+        void showNext(Note note);
+
+        void showFinish();
+
+        void showError(Throwable e);
     }
 
     interface Presenter extends BasePresenter {

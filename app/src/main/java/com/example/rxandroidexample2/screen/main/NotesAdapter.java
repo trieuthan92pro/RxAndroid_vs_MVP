@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.rxandroidexample2.R;
 import com.example.rxandroidexample2.data.model.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
@@ -47,6 +48,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public void addData(Note note){
+        if(mNotes == null){
+            mNotes = new ArrayList<>();
+        }
         mNotes.add(note);
         notifyItemChanged(mNotes.size()-1);
     }
