@@ -19,6 +19,7 @@ import com.example.rxandroidexample2.data.model.Note;
 import java.util.List;
 
 public class MainFragment extends Fragment implements MainContract.View {
+    private static final String MSG = "Emit finished!";
     private RecyclerView mRecyclerNotes;
     private NotesAdapter mNotesAdapter;
     private ProgressBar mProgressBar;
@@ -71,7 +72,17 @@ public class MainFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void showError(Exception e) {
+    public void showNext(Note note) {
+        mNotesAdapter.addData(note);
+    }
+
+    @Override
+    public void showFinish() {
+        Toast.makeText(getContext(), MSG, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(Throwable e) {
         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
     }
 

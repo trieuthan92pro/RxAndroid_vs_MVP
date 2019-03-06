@@ -18,6 +18,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter implements MainContract.Presenter {
+    private static final String REGEX_C = "c";
+    private static final String REGEX_B = "b";
     private MainContract.View mView;
     private NoteDataSource mNoteDataSource;
     @NonNull
@@ -44,7 +46,8 @@ public class MainPresenter implements MainContract.Presenter {
                                 .filter(new Predicate<Note>() {
                                     @Override
                                     public boolean test(Note s) throws Exception {
-                                        return s.getNode().toLowerCase().startsWith("c");
+                                        return s.getNode().toLowerCase().startsWith(REGEX_C) ||
+                                                s.getNode().toLowerCase().startsWith(REGEX_B);
                                     }
                                 })
                                 .map(new Function<Note, Note>() {
@@ -56,7 +59,6 @@ public class MainPresenter implements MainContract.Presenter {
                                 })
                                 .subscribeWith(disposableObserver));
                 mView.showProgressBar(false);
-                mView.showResult(notes);
             }
 
             @Override
@@ -92,15 +94,17 @@ public class MainPresenter implements MainContract.Presenter {
         return new DisposableObserver<Note>() {
             @Override
             public void onNext(Note s) {
+                mView.showNext(s);
             }
 
             @Override
             public void onError(Throwable e) {
+                mView.showError(e);
             }
 
             @Override
             public void onComplete() {
-
+                mView.showFinish();
             }
         };
     }
